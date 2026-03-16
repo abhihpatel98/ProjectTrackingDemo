@@ -1,0 +1,232 @@
+{
+  "$schema": "https://github.com/Azure/data-api-builder/releases/download/v1.7.90/dab.draft.schema.json",
+  "data-source": {
+    "database-type": "mssql",
+    "connection-string": "Data Source=.\\SQLEXPRESS;Database=ProjectTrackingDemo;Persist Security Info=True;User ID=sa;Password=triveni@123;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;",
+    "options": {
+      "set-session-context": false
+    }
+  },
+  "runtime": {
+    "rest": {
+      "enabled": true,
+      "path": "/api",
+      "request-body-strict": true
+    },
+    "graphql": {
+      "enabled": true,
+      "path": "/graphql",
+      "allow-introspection": true
+    },
+    "mcp": {
+      "enabled": true,
+      "path": "/mcp"
+    },
+    "host": {
+      "cors": {
+        "origins": [],
+        "allow-credentials": false
+      },
+      "authentication": {
+        "provider": "AppService"
+      },
+      "mode": "development"
+    }
+  },
+  "entities": {
+    "Users": {
+      "source": {
+        "object": "dbo.Users",
+        "type": "table"
+      },
+      "fields": [
+        {
+          "name": "Name",
+          "description": "Full name of the user",
+          "primary-key": false
+        },
+        {
+          "name": "Email",
+          "description": "User email address",
+          "primary-key": false
+        },
+        {
+          "name": "Role",
+          "description": "Role of the user such as Manager",
+          "primary-key": false
+        },
+        {
+          "name": "UserId",
+          "description": "Unique identifier for the user",
+          "primary-key": true
+        }
+      ],
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Users",
+          "plural": "Users"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "read"
+            }
+          ]
+        }
+      ]
+    },
+    "Projects": {
+      "source": {
+        "object": "dbo.Projects",
+        "type": "table"
+      },
+      "fields": [
+        {
+          "name": "Name",
+          "description": "Name of the project",
+          "primary-key": false
+        },
+        {
+          "name": "Description",
+          "description": "Detailed description of the project",
+          "primary-key": false
+        },
+        {
+          "name": "OwnerId",
+          "description": "User responsible for managing the project",
+          "primary-key": false
+        },
+        {
+          "name": "CreatedDate",
+          "description": "Date when the project was created",
+          "primary-key": false
+        },
+        {
+          "name": "ProjectId",
+          "description": "Unique identifier for the project",
+          "primary-key": true
+        },
+        {
+          "name": "ProjectName",
+          "description": "Name of the project",
+          "primary-key": false
+        },
+        {
+          "name": "StartDate",
+          "description": "Project start date",
+          "primary-key": false
+        },
+        {
+          "name": "EndDate",
+          "description": "Project end date",
+          "primary-key": false
+        },
+        {
+          "name": "Status",
+          "description": "Current status of the project",
+          "primary-key": false
+        }
+      ],
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Projects",
+          "plural": "Projects"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "read"
+            }
+          ]
+        }
+      ]
+    },
+    "Tasks": {
+      "source": {
+        "object": "dbo.Tasks",
+        "type": "table"
+      },
+      "fields": [
+        {
+          "name": "ProjectId",
+          "description": "Project to which the task belongs",
+          "primary-key": false
+        },
+        {
+          "name": "Title",
+          "description": "Short title of the task",
+          "primary-key": false
+        },
+        {
+          "name": "AssignedTo",
+          "description": "User assigned to complete the task",
+          "primary-key": false
+        },
+        {
+          "name": "Status",
+          "description": "Task status such as Pending",
+          "primary-key": false
+        },
+        {
+          "name": "DueDate",
+          "description": "Deadline for completing the task",
+          "primary-key": false
+        },
+        {
+          "name": "TaskId",
+          "description": "Unique identifier for the task",
+          "primary-key": true
+        },
+        {
+          "name": "Description",
+          "description": "Detailed task description",
+          "primary-key": false
+        },
+        {
+          "name": "AssignedUserId",
+          "description": "User assigned to complete the task",
+          "primary-key": false
+        },
+        {
+          "name": "CreatedDate",
+          "description": "Date when the task was created",
+          "primary-key": false
+        }
+      ],
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Tasks",
+          "plural": "Tasks"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "read"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
