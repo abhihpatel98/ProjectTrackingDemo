@@ -218,6 +218,41 @@ public class DatabaseService
         return tasks;
     }
 
+    public List<TaskDetail> GetTasksByProjectName(string projectName)
+    {
+        var tasks = new List<TaskDetail>();
+        using var connection = new SqlConnection(_connectionString);
+        connection.Open();
+        var query = @"
+            SELECT t.TaskId, t.ProjectId, p.ProjectName, t.Title, t.Description, t.Status, 
+                   t.AssignedUserId, ISNULL(u.Name, 'Unassigned') AS AssignedUserName, t.CreatedDate
+            FROM Tasks t
+            JOIN Projects p ON t.ProjectId = p.ProjectId
+            LEFT JOIN Users u ON t.AssignedUserId = u.UserId
+            WHERE p.ProjectName = @ProjectName
+            ORDER BY t.CreatedDate DESC";
+        
+        using var command = new SqlCommand(query, connection);
+        command.Parameters.AddWithValue("@ProjectName", projectName);
+        using var reader = command.ExecuteReader();
+        while (reader.Read())
+        {
+            tasks.Add(new TaskDetail
+            {
+                TaskId = reader.GetInt32(0),
+                ProjectId = reader.GetInt32(1),
+                ProjectName = reader.GetString(2),
+                Title = reader.GetString(3),
+                Description = reader.IsDBNull(4) ? string.Empty : reader.GetString(4),
+                Status = reader.GetString(5),
+                AssignedUserId = reader.GetInt32(6),
+                AssignedUserName = reader.GetString(7),
+                CreatedDate = reader.GetDateTime(8)
+            });
+        }
+        return tasks;
+    }
+
     public List<UserWorkload> GetUserWorkload()
     {
         var workloads = new List<UserWorkload>();
