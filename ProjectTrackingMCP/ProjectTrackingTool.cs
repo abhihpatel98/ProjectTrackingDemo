@@ -71,6 +71,56 @@ public class ProjectTrackingTool
             };
         }
     }
+
+    // ===== TASK OPERATIONS =====
+
+    [McpServerTool(Name = "create_task")]
+    [Description("Create a new task in a project")]
+    public ProjectActionResponse CreateTask(
+        [Description("Project ID")] int projectId,
+        [Description("Task title")] string title,
+        [Description("Task description")] string description,
+        [Description("User ID to assign the task to")] int assignedUserId)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(title))
+            {
+                return new ProjectActionResponse
+                {
+                    Success = false,
+                    Message = "Task title cannot be empty"
+                };
+            }
+
+            if (string.IsNullOrWhiteSpace(description))
+            {
+                return new ProjectActionResponse
+                {
+                    Success = false,
+                    Message = "Task description cannot be empty"
+                };
+            }
+
+            var success = _dbService.CreateNewTask(projectId, title, description, assignedUserId);
+
+            return new ProjectActionResponse
+            {
+                Success = success,
+                Message = success
+                    ? $"Task '{title}' created successfully in project {projectId}"
+                    : "Failed to create task"
+            };
+        }
+        catch (Exception ex)
+        {
+            return new ProjectActionResponse
+            {
+                Success = false,
+                Message = $"Error creating task: {ex.Message}"
+            };
+        }
+    }
 }
 
 // ===== DTO CLASSES =====
