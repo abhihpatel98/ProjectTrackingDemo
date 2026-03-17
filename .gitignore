@@ -1,0 +1,77 @@
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio cache/options
+.vs/
+
+# Visual Studio Code
+.vscode/*
+!.vscode/mcp.json
+!.vscode/settings.json
+!.vscode/launch.json
+*.code-workspace
+
+# Rider
+.idea/
+*.sln.iml
+
+# ReSharper
+_ReSharper*/
+*.DotSettings.user
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Local history for Visual Studio
+.localhistory/
+
+# Visual Studio Code extensions
+extensions.json
+*.vsix
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+
+# Miscellaneous
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Database and connection strings
+*.db
+*.mdf
+*.ldf
+appsettings.local.json
+
+# Environment files
+.env
+.env.local
+
+# Test Results
+TestResults/
+*.trx
+
+# Coverage
+coverage/
+*.coverage

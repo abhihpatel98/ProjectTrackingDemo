@@ -1,0 +1,26 @@
+{
+  "servers": {
+    "sql-mcp-server": {
+      "type": "stdio",
+      "command": "dotnet",
+      "args": [
+        "tool",
+        "run",
+        "dab",
+        "start",
+        "--mcp-stdio",
+        "role:anonymous",
+        "--config",
+        "./dab-config.json"
+      ]
+    },
+    "github-mcp-server": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp"
+    },
+    "project-tracking-app-repo-mcp-server": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "C:/Personal Repos/MCP Demo/ProjectTrackingDemo/ProjectTrackingApp"]
+    }
+  }
+}
