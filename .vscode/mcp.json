@@ -26,6 +26,15 @@
 				"C:/Personal Repos/MCP Demo/ProjectTrackingDemo/ProjectTrackingApp"
 			],
 			"type": "stdio"
+		},
+		"project-tracking-app-mcp-server": {
+			"type": "stdio",
+			"command": "dotnet",
+			"args": [
+				"run",
+				"--project",
+				"./ProjectTrackingMCP/ProjectTrackingMCP.csproj",
+			]
 		}
 	}
 }

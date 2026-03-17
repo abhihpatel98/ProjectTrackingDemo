@@ -156,6 +156,32 @@ public class DatabaseService
         return summaries;
     }
 
+    // ===== CREATE PROJECT =====
+    public bool CreateNewProject(string projectName, DateTime startDate, DateTime endDate, string status = "Active")
+    {
+        try
+        {
+            using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+            var query = @"
+                INSERT INTO Projects (ProjectName, StartDate, EndDate, Status)
+                VALUES (@ProjectName, @StartDate, @EndDate, @Status)";
+            
+            using var command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@ProjectName", projectName);
+            command.Parameters.AddWithValue("@StartDate", startDate);
+            command.Parameters.AddWithValue("@EndDate", endDate);
+            command.Parameters.AddWithValue("@Status", status);
+            
+            return command.ExecuteNonQuery() > 0;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error creating project: {ex.Message}");
+            return false;
+        }
+    }
+
     // ===== TASK QUERIES =====
     public List<TaskDetail> GetTasksByUser(int userId)
     {

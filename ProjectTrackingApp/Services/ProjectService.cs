@@ -92,4 +92,69 @@ public class ProjectService
             Console.WriteLine($"{summary.ProjectName,-30} {summary.TotalTasks,-7} {summary.CompletedTasks,-7} {summary.InProgressTasks,-7} {summary.PendingTasks,-7}");
         }
     }
+
+    public void CreateNewProject(List<User> users)
+    {
+        Console.Clear();
+        Console.WriteLine("╔════════════════════════════════════════════════════════════════╗");
+        Console.WriteLine("║                    CREATE NEW PROJECT                           ║");
+        Console.WriteLine("╚════════════════════════════════════════════════════════════════╝");
+        Console.WriteLine();
+
+        Console.Write("Enter project name: ");
+        string projectName = Console.ReadLine() ?? "";
+
+        if (string.IsNullOrWhiteSpace(projectName))
+        {
+            Console.WriteLine("Project name cannot be empty.");
+            return;
+        }
+
+        Console.Write("Enter project description (optional): ");
+        string description = Console.ReadLine() ?? "";
+
+        Console.WriteLine("\nAvailable Users (for project owner):");
+        foreach (var user in users)
+        {
+            Console.WriteLine($"[{user.UserId}] {user.Name} ({user.Role})");
+        }
+
+        Console.Write("\nEnter owner user ID: ");
+        if (!int.TryParse(Console.ReadLine(), out int ownerId) || !users.Any(u => u.UserId == ownerId))
+        {
+            Console.WriteLine("Invalid user ID.");
+            return;
+        }
+
+        Console.Write("Enter start date (yyyy-MM-dd): ");
+        if (!DateTime.TryParse(Console.ReadLine(), out DateTime startDate))
+        {
+            Console.WriteLine("Invalid start date.");
+            return;
+        }
+
+        Console.Write("Enter end date (yyyy-MM-dd): ");
+        if (!DateTime.TryParse(Console.ReadLine(), out DateTime endDate))
+        {
+            Console.WriteLine("Invalid end date.");
+            return;
+        }
+
+        if (endDate < startDate)
+        {
+            Console.WriteLine("End date cannot be before start date.");
+            return;
+        }
+
+        bool success = _dbService.CreateNewProject(projectName, startDate, endDate);
+
+        if (success)
+        {
+            Console.WriteLine("\n✓ Project created successfully!");
+        }
+        else
+        {
+            Console.WriteLine("\n✗ Failed to create project.");
+        }
+    }
 }

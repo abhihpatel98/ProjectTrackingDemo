@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="ProjectTrackingApp/ProjectTrackingApp.csproj" />
+  <Project Path="ProjectTrackingMCP/ProjectTrackingMCP.csproj" />
 </Solution>

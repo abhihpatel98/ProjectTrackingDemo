@@ -57,6 +57,9 @@ public class ConsoleMenu
                     MarkTaskCompleted();
                     break;
                 case "9":
+                    CreateNewProject();
+                    break;
+                case "10":
                     Console.WriteLine("\nGoodbye!");
                     return;
                 default:
@@ -93,7 +96,8 @@ public class ConsoleMenu
         Console.WriteLine("6. Create a new task for a project");
         Console.WriteLine("7. Reassign a task to another user");
         Console.WriteLine("8. Mark a task as completed");
-        Console.WriteLine("9. Exit");
+        Console.WriteLine("9. Create a new project");
+        Console.WriteLine("10. Exit");
         Console.WriteLine();
         Console.Write("Choose an option: ");
     }
@@ -191,5 +195,17 @@ public class ConsoleMenu
     private void MarkTaskCompleted()
     {
         _taskService.MarkTaskAsCompleted();
+    }
+
+    private void CreateNewProject()
+    {
+        if (_users.Count == 0)
+        {
+            Console.WriteLine("At least one user is required to create a project.");
+            return;
+        }
+
+        _projectService.CreateNewProject(_users);
+        LoadData(); // Refresh data
     }
 }
